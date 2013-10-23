@@ -15,7 +15,7 @@ class EngineBase(object):
         sub-classes.
     """
     def create_thumbnail(self, image, geometry, upscale=True, crop=None,
-                         colorspace='RGB', sharpness=2.0):
+                         colorspace='RGB', sharpness=2.7):
         """
         This serves as a really basic example of a thumbnailing method. You
         may want to implement your own logic, but this will work for
