@@ -14,8 +14,8 @@ class EngineBase(object):
     .. note:: Do not instantiate and use this class directly, use one of the
         sub-classes.
     """
-    def create_thumbnail(self, image, geometry,
-                         upscale=True, crop=None, colorspace='RGB'):
+    def create_thumbnail(self, image, geometry, upscale=True, crop=None,
+                         colorspace='RGB', sharpness=2.0):
         """
         This serves as a really basic example of a thumbnailing method. You
         may want to implement your own logic, but this will work for
@@ -38,8 +38,12 @@ class EngineBase(object):
         image = self.colorspace(image, colorspace)
         image = self.scale(image, geometry, upscale, crop)
         image = self.crop(image, geometry, crop)
+        image = self.sharpen(image, sharpness)
 
         return image
+
+    def sharpen(self, image, sharpness):
+        return self._sharpen(image, sharpness)
 
     def colorspace(self, image, colorspace):
         """
@@ -226,4 +230,7 @@ class EngineBase(object):
         :returns: The colorspace-adjusted image. The returned type depends on
             your choice of Engine.
         """
+        raise NotImplemented()
+
+    def _sharpen(self, image, sharpness):
         raise NotImplemented()

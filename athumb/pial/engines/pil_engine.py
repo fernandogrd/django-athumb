@@ -2,14 +2,15 @@ from cStringIO import StringIO
 from athumb.pial.engines.base import EngineBase
 
 try:
-    from PIL import Image, ImageFile, ImageDraw
+    from PIL import Image, ImageFile, ImageDraw, ImageEnhance
 except ImportError:
-    import Image, ImageFile, ImageDraw
+    import Image, ImageFile, ImageDraw, ImageEnhance
 
 class PILEngine(EngineBase):
     """
     Python Imaging Library Engine. This implements members of EngineBase.
     """
+
     def get_image(self, source):
         """
         Given a file-like object, loads it up into a PIL.Image object
@@ -97,6 +98,9 @@ class PILEngine(EngineBase):
         """
         return image.crop((x_offset, y_offset,
                            width + x_offset, height + y_offset))
+    def _sharpen(self, image, sharpness):
+        sharpener = ImageEnhance.Sharpness(image)
+        return sharpener.enhance(sharpness)
 
     def _get_raw_data(self, image, format, quality):
         """
